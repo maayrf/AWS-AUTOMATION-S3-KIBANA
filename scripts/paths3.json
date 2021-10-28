@@ -1,0 +1,14 @@
+{
+	"Records": [
+		{
+			"s3": {
+				"bucket": {
+					"name": "name_ambiente"
+				},
+				"object": {
+					"key": "key_do_arquivo"
+				}
+			}
+		}
+	]
+}
