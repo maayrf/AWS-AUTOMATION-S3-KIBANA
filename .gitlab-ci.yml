@@ -1,0 +1,27 @@
+image: alpine
+
+stages:
+ - build
+
+variables:
+  GIT_SSL_NO_VERIFY: "true"
+
+before_script:
+  - apk update && apk add --update grep bash zip coreutils git openssh curl jq && rm -rf /var/cache/apk/*
+  - apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install awscli && rm -rf /var/cache/apk/*
+  - mkdir ~/.aws/
+  - ROLENAME=`curl -s http://[IP APIPA]/latest/meta-data/iam/security-credentials/`
+  - AWS_ACCESS_KEY=`curl -s http://[IP APIPA]/latest/meta-data/iam/security-credentials/${ROLENAME} | grep AccessKeyId | awk -F'"' '{print $4}'`
+  - AWS_SECRET_KEY=`curl -s http://[IP APIPA]/latest/meta-data/iam/security-credentials/${ROLENAME} | grep SecretAccessKey | awk -F'"' '{print $4}'`
+  - TOKEN=`curl -s http://[IP APIPA]/latest/meta-data/iam/security-credentials/${ROLENAME} | grep Token | awk -F'"' '{print $4}'`
+  - echo -e "[default]\naws_access_key_id = $AWS_ACCESS_KEY\naws_secret_access_key = $AWS_SECRET_KEY\naws_session_token = $TOKEN" > ~/.aws/credentials
+#  - echo "[default]" > ~/.aws/config && echo "output = json" >> ~/.aws/config && echo "region = us-west-2" >> ~/.aws/config
+  - mkdir -p ~/projects/infraestrutura/date-logs/
+
+deploy:
+  stage: build
+  script:
+    - cd scripts
+    - sh loop.sh ${DataInicial} ${DataFinal} ${app} ${nivel} ${environment}
+  only:
+    - trigger
