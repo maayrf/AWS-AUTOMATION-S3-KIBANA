@@ -1,0 +1,14 @@
+{
+	"Records": [
+		{
+			"s3": {
+				"bucket": {
+					"name": "bucket-name-prod"
+				},
+				"object": {
+					"key": "nivel1/services/logs/application/2021/01/19/23/application_logs-1-2021-01-19-23-58-10-xxxxxxxxxxxxx.gz"
+				}
+			}
+		}
+	]
+}
