@@ -1,0 +1,2 @@
+# AWS-AUTOMATION-S3-KIBANA
+Objetivo de automatizar buscas de logs relativamente antigos e realocá-los nos gráficos do Kibana. Houve a necessidade de automatizar, pois, o Kibana guarda apenas logs de aplicações dos últimos meses, os demais são deletados do gráfico, mas permanecem armazenados no S3. Quando há auditorias ou até mesmo a necessidade, esses logs tinham que ser resgatados manualmente e então surgiu a demanda.
